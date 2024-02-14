@@ -1,5 +1,6 @@
 import requests
-from flask import Flask, jsonify
+from flask import Flask, render_template
+import plotly.express as px
 
 app = Flask(__name__)
 
@@ -29,29 +30,35 @@ def get_lang_stats(repos: list) -> dict:
 @app.route('/user/<username>', methods=['GET'])
 def info(username: str):
     if not username:
-        return jsonify({'message': 'Error: Username is empty'}), 400
+        return render_template('error.html', message='Error: Username is empty'), 400
     
     try:
         response = requests.get(f'https://api.github.com/users/{username}/repos')
         
         if response.status_code != 200:
-            return jsonify({'message': 'Error: User not found'}), 404
+            return render_template('error.html', message='Error: User not found'), 404
         
         repos = response.json()
         lang_stats = get_lang_stats(repos)
 
         if 'error_message' in lang_stats:
-            return jsonify(lang_stats), lang_stats.get('status', 500)
+            return render_template('error.html', message=lang_stats['error_message']), lang_stats.get('status', 500)
 
-        return jsonify(lang_stats), 200
+        # Create a Pie chart using Plotly
+        fig = px.pie(lang_stats, values=[lang['count'] for lang in lang_stats.values()], names=list(lang_stats.keys()), title=f'Repo Language Distribution for {username}')
+        fig.update_traces(textinfo='percent+label')
+        fig.update_layout(showlegend=False)
+
+        # Render the chart directly in the template
+        chart_html = fig.to_html(full_html=False)
+
+        return render_template('chart_template.html', chart_html=chart_html)
     except requests.exceptions.RequestException as e:
-        return jsonify({'message': 'Error: Something went wrong', 'exception_details': str(e)}), 500
+        return render_template('error.html', message='Error: Something went wrong', exception_details=str(e)), 500
 
 @app.route('/<mssg>')
 def hello_world(mssg):
-    return jsonify({
-        'message': f'{mssg}!'
-    })
+    return render_template('message_template.html', message=f'{mssg}!')
 
 if __name__ == '__main__':
     app.run(debug=True)
