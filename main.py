@@ -2,7 +2,7 @@ import requests
 from flask import Flask, send_file
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-import matplotlib.colors as mcolors  # Importa el módulo de colores de Matplotlib
+import matplotlib.colors as mcolors
 import matplotlib.patheffects as PathEffects
 import os
 import io
