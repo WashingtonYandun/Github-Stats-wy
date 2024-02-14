@@ -1,6 +1,7 @@
 import requests
 from flask import Flask, render_template
 import plotly.express as px
+import os
 
 app = Flask(__name__)
 
@@ -60,5 +61,13 @@ def info(username: str):
 def hello_world(mssg):
     return render_template('message_template.html', message=f'{mssg}!')
 
+@app.route('/')
+def index():
+    return {
+        "message": "Welcome to the GitHub Stats API"
+    }
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.getenv('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
