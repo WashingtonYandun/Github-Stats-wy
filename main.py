@@ -1,15 +1,30 @@
 import requests
 from flask import Flask, send_file
 import matplotlib.pyplot as plt
-import matplotlib
+import matplotlib.cm as cm
+import matplotlib.colors as mcolors  # Importa el módulo de colores de Matplotlib
+import matplotlib.patheffects as PathEffects
 import os
 import io
 
+
 app = Flask(__name__)
-matplotlib.use('Agg')
+plt.switch_backend('agg')
 
 
 def get_lang_stats(repos: list) -> dict:
+    """
+    Calculate the language statistics for a list of repositories.
+
+    Args:
+        repos (list): A list of repositories.
+
+    Returns:
+        dict: A dictionary containing the language statistics, with the language name as the key and the count and percentage as the values.
+
+    Raises:
+        Exception: If something goes wrong during the calculation, an exception is raised with an error message and exception details.
+    """
     try:
         langs_stats = {}
 
@@ -30,42 +45,60 @@ def get_lang_stats(repos: list) -> dict:
             'error_message': 'Error: Something went wrong',
             'exception_details': str(e)
         }, 500
-    
 
-def create_chart(lang_stats, username: str, chart_type: str):
+
+def create_chart(lang_stats: dict) -> io.BytesIO:
+    """
+    Create a pie chart based on language statistics.
+
+    Args:
+        lang_stats (dict): A dictionary containing language statistics, where the keys are the language names
+                           and the values are dictionaries with the 'percentage' key representing the percentage
+                           of usage for each language.
+
+    Returns:
+        io.BytesIO: A BytesIO object containing the generated chart image in PNG format.
+    """
+    cmap = cm.get_cmap('Blues')
+    norm = mcolors.Normalize(vmin=0, vmax=len(lang_stats))
+    colors = cmap(norm(range(len(lang_stats))))
+    
     data = [(lang, stats['percentage']) for lang, stats in lang_stats.items()]
     data_sorted = sorted(data, key=lambda x: x[1], reverse=True)
+    
     labels, sizes = zip(*data_sorted)
 
-    fig, ax = plt.subplots()
-    if chart_type == 'donut':
-        wedges, texts, autotexts = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, wedgeprops=dict(width=0.3))
-        centre_circle = plt.Circle((0,0),0.70,fc='white')
-        fig.gca().add_artist(centre_circle)
+    fig, ax = plt.subplots(figsize=(3, 2), facecolor="#20232a")
+    wedges, texts, autotexts = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=180, colors=colors)
 
-    elif chart_type == 'pie':
-        wedges, texts, autotexts = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
-    
-    plt.setp(texts, size=8, weight="bold")
-    plt.setp(autotexts, size=8, color="white", weight="bold")
-    
-    ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    plt.title(f'Repo Language Distribution for {username}', pad=20, weight='bold', size=12)
+    plt.setp(texts, fontsize=3, color='#5AA5E7', fontweight='bold')
+    plt.setp(autotexts, fontsize=3, color="#20232a")
 
-    # Save the plot to a bytes object with high DPI for better quality
+    ax.axis('equal')
     buf = io.BytesIO()
-    plt.savefig(buf, format='png', dpi=500)
+    plt.savefig(buf, format='png', dpi=1000, bbox_inches='tight')
     buf.seek(0)
     plt.close(fig)
     return buf
 
 
-@app.route('/user/<username>/<chart_type>', methods=['GET'])
-def info(username: str, chart_type: str):
+@app.route('/user/<username>', methods=['GET'])
+def info(username: str) -> str:
+    """
+    Retrieves information about a GitHub user and generates a language statistics chart.
+
+    Args:
+        username (str): The GitHub username.
+
+    Returns:
+        str: The response message or the generated chart image.
+
+    Raises:
+        ValueError: If the username is empty.
+        requests.exceptions.RequestException: If an error occurs during the API request.
+    """
     if not username:
         return "Error: Username is empty", 400
-    if chart_type not in ['pie', 'donut']:
-        return "Error: Invalid chart type", 400
     
     try:
         response = requests.get(f'https://api.github.com/users/{username}/repos')
@@ -77,23 +110,15 @@ def info(username: str, chart_type: str):
         lang_stats = get_lang_stats(repos)
 
         if 'error_message' in lang_stats:
-            return "Error: Something went wrong", lang_stats.get('status', 500)
+            return lang_stats['error_message'], 500
 
-        # Create a chart based on the specified type
-        image = create_chart(lang_stats, username, chart_type)
+        image = create_chart(lang_stats)
         
         return send_file(image, mimetype='image/png')
     except requests.exceptions.RequestException as e:
-        return "Error: Something went wrong", 500
-
-
-@app.route('/')
-def index():
-    return {
-        "message": "Welcome to the GitHub Stats API"
-    }
+        return f"Error: Something went wrong - {e}", 500
 
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
