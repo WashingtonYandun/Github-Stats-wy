@@ -1,9 +1,8 @@
 import requests
-from flask import Flask, send_file
+from flask import Flask, Response
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
-import matplotlib.patheffects as PathEffects
 import os
 import io
 
@@ -47,17 +46,15 @@ def get_lang_stats(repos: list) -> dict:
         }, 500
 
 
-def create_chart(lang_stats: dict) -> io.BytesIO:
+def create_chart(lang_stats: dict) -> io.StringIO:
     """
-    Create a pie chart based on language statistics.
+    Create a pie chart based on language statistics in SVG format.
 
     Args:
-        lang_stats (dict): A dictionary containing language statistics, where the keys are the language names
-                           and the values are dictionaries with the 'percentage' key representing the percentage
-                           of usage for each language.
+        lang_stats (dict): A dictionary containing language statistics.
 
     Returns:
-        io.BytesIO: A BytesIO object containing the generated chart image in PNG format.
+        io.StringIO: A StringIO object containing the generated chart image in SVG format.
     """
     cmap = cm.get_cmap('Blues')
     norm = mcolors.Normalize(vmin=0, vmax=len(lang_stats))
@@ -68,34 +65,30 @@ def create_chart(lang_stats: dict) -> io.BytesIO:
     
     labels, sizes = zip(*data_sorted)
 
-    fig, ax = plt.subplots(figsize=(3, 2), facecolor="#20232a")
+    fig, ax = plt.subplots(figsize=(6, 4), facecolor="#20232a")
     wedges, texts, autotexts = ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=180, colors=colors)
 
-    plt.setp(texts, fontsize=3, color='#5AA5E7', fontweight='bold')
-    plt.setp(autotexts, fontsize=3, color="#20232a")
+    plt.setp(texts, fontsize=8, color='#5AA5E7', fontweight='bold')
+    plt.setp(autotexts, fontsize=8, color="#20232a")
 
     ax.axis('equal')
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png', dpi=1000, bbox_inches='tight')
-    buf.seek(0)
+    svg_buf = io.StringIO()
+    plt.savefig(svg_buf, format='svg', bbox_inches='tight')
+    svg_buf.seek(0)
     plt.close(fig)
-    return buf
+    return svg_buf
 
 
 @app.route('/user/<username>', methods=['GET'])
-def info(username: str) -> str:
+def info(username: str) -> Response:
     """
-    Retrieves information about a GitHub user and generates a language statistics chart.
+    Retrieves information about a GitHub user and generates a language statistics chart in SVG format.
 
     Args:
         username (str): The GitHub username.
 
     Returns:
-        str: The response message or the generated chart image.
-
-    Raises:
-        ValueError: If the username is empty.
-        requests.exceptions.RequestException: If an error occurs during the API request.
+        Response: The Flask Response object with the SVG image.
     """
     if not username:
         return "Error: Username is empty", 400
@@ -112,9 +105,8 @@ def info(username: str) -> str:
         if 'error_message' in lang_stats:
             return lang_stats['error_message'], 500
 
-        image = create_chart(lang_stats)
-        
-        return send_file(image, mimetype='image/png')
+        svg_image = create_chart(lang_stats)
+        return Response(svg_image.getvalue(), mimetype='image/svg+xml')
     except requests.exceptions.RequestException as e:
         return f"Error: Something went wrong - {e}", 500
 
