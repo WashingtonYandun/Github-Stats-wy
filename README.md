@@ -10,4 +10,4 @@ Github Stats Card for readme files
 
 -   Example of how it looks
 
-[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/user/washingtonyandun)]
+![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/user/washingtonyandun)
