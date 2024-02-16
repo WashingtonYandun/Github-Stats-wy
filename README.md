@@ -23,18 +23,21 @@ There are two types of cards:
 
 -   Bar Chart
 -   Pie Chart
+-   Donut Chart
 
 #### Example of how to use it
 
 ```md
-[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/user/username/chart)]
+[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/username/chart)]
 ```
 
 #### Example of how it looks
 
-![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/user/washingtonyandun/bar)
+![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar)
 
-![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/user/washingtonyandun/pie)
+![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/pie)
+
+![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut)
 
 ---
 
