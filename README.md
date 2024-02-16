@@ -2,6 +2,9 @@
 
 Github Stats Card for readme files based on some of the most popular ones.
 
+> [!WARNING]
+> The endpoints can be changed at any time. I will try to keep them updated, but I can't guarantee it.
+
 ## Cards
 
 -   Github language stats card for your profile based on the number of repositories you have in each language. (The most representative)
