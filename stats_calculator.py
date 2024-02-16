@@ -19,5 +19,5 @@ def calculate_language_stats(repos: list) -> dict:
 
     for lang in langs_stats:
         langs_stats[lang]['percentage'] = round((langs_stats[lang]['count'] / total_valid_repos) * 100, 2) if total_valid_repos > 0 else 0
-    
-    return langs_stats
+
+    return dict(sorted(langs_stats.items(), key=lambda item: item[1]['percentage'], reverse=True))
