@@ -25,7 +25,7 @@ def generate_language_stacked_bar(
     """
     # Adjusted parameters for a more compact and customized chart
     svg_padding = 15  # Reduced padding
-    svg_width = 350  # Reduced width for compactness
+    svg_width = 400  # Reduced width for compactness
     bar_padding_horizontal = 30  # Adjusted padding inside SVG for the bar
     bar_height = 20  # Height of each bar (language segment)
     space_above_bar = 40  # Reduced space for title
@@ -109,12 +109,12 @@ def generate_language_pie_chart(
     sorted_lang_stats = dict(sorted(lang_stats.items(), key=lambda item: item[1]['percentage'], reverse=True))
 
     svg_width = 400  # Reduced width for compactness
-    svg_height = 300  # Reduced height to make it more compact
-    radius = 70
+    svg_height = 200  # Reduced height to make it more compact
+    radius = 60
     chart_center_x = svg_width / 3  # Position chart on the left
     chart_center_y = svg_height / 2  # Center chart vertically
-    legend_x_start = 2 * svg_width / 3 - 30  # Adjust legend position for compactness
-    legend_y_start = (svg_height - (len(sorted_lang_stats) * 20)) / 2  # Center legend vertically, adjusted for compactness
+    legend_x_start = 2 * svg_width / 3 - 50  # Adjust legend position for compactness
+    legend_y_start = (svg_height - (len(sorted_lang_stats) * 20)) / 2 + 10  # Center legend vertically, adjusted for compactness
 
     # SVG template initialization with border
     svg_template = f'''
