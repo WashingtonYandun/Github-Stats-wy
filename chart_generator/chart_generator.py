@@ -1,5 +1,5 @@
 import math
-from constants import programming_languages_palette
+from chart_generator.palettes import programming_languages_palette
 
 def generate_language_stacked_bar(
         username: str,
