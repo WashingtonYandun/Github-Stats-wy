@@ -50,6 +50,7 @@ def langs(username: str, chart: str) -> Response:
 @app.route('/')
 def index() -> str:
     return {
-        "Langs Usage": "https://github-stats-wy.vercel.app/langs/<username>/<chart>&border_color=<color>&background_color=<color>&title_color=<color>&text_color=<color>&hole_radius_percentage=<int>",
-        "Profile Usage": "https://github-stats-wy.vercel.app/profile/<username>&border_color=<color>&background_color=<color>&title_color=<color>&text_color=<color>"
+        "Langs Usage": "https://github-stats-wy.vercel.app/langs/<username>/<chart>&border_color=<color>?background_color=<color>?title_color=<color>?text_color=<color>?hole_radius_percentage=<int>",
+        
+        "Profile Usage": "https://github-stats-wy.vercel.app/profile/<username>?border_color=<color>?background_color=<color>?title_color=<color>?text_color=<color>"
     }
