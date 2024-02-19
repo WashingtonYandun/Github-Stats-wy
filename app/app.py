@@ -36,6 +36,8 @@ def langs(username: str, chart: str) -> Response:
 
         if chart == 'donut':
             chart_kwargs['hole_radius_percentage'] = request.args.get('hole_radius_percentage', default=40, type=int)
+        elif chart == 'pie':
+            chart_kwargs['hole_radius_percentage'] = 0
 
         svg_image = chart_factory(username, lang_stats, chart, **chart_kwargs)
 

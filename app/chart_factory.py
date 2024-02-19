@@ -1,6 +1,6 @@
 
 
-from chart_generator.chart_generator import generate_language_donut_chart, generate_language_pie_chart, generate_language_stacked_bar
+from chart_generator.chart_generator import generate_language_donut_chart, generate_language_stacked_bar
 
 
 def chart_factory(username, lang_stats, chart_type, **kwargs):
@@ -17,7 +17,7 @@ def chart_factory(username, lang_stats, chart_type, **kwargs):
         str: The generated chart image in SVG format.
     """
     if chart_type == 'pie':
-        return generate_language_pie_chart(username=username, lang_stats=lang_stats, **kwargs)
+        return generate_language_donut_chart(username=username, lang_stats=lang_stats, **kwargs)
     elif chart_type == 'bar':
         return generate_language_stacked_bar(username=username, lang_stats=lang_stats, **kwargs)
     elif chart_type == 'donut':
