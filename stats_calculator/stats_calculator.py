@@ -21,3 +21,19 @@ def calculate_language_stats(repos: list) -> dict:
         langs_stats[lang]['percentage'] = round((langs_stats[lang]['count'] / total_valid_repos) * 100, 2) if total_valid_repos > 0 else 0
 
     return dict(sorted(langs_stats.items(), key=lambda item: item[1]['percentage'], reverse=True))
+
+
+def calculate_profile_stats(events: list, repos: list) -> dict:
+    profile_stats = {
+        "total_repos": len(repos),
+        "total_pull_requests": 0,
+        "total_commits": 0,
+        "total_stars": 0,
+        "total_forks": 0,
+        "total_watchers": 0,
+        "total_issues": 0
+    }
+
+    # Calculate the total pull requests, commits, stars, forks, watchers, and issues
+
+    return profile_stats    
