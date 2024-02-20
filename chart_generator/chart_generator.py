@@ -24,14 +24,14 @@ def generate_language_stacked_bar(
         str: The SVG template representing the stacked bar chart.
     """
     # Adjusted parameters for a more compact and customized chart
-    svg_padding = 15  # Reduced padding
-    svg_width = 400  # Reduced width for compactness
-    bar_padding_horizontal = 30  # Adjusted padding inside SVG for the bar
-    bar_height = 20  # Height of each bar (language segment)
-    space_above_bar = 40  # Reduced space for title
-    space_below_bar = 25  # Reduced space for legend
-    legend_entry_height = 18  # Slightly reduced for compactness
-    legend_columns = 2  # Number of columns for the legend remains the same
+    svg_padding = 15
+    svg_width = 400
+    bar_padding_horizontal = 30
+    bar_height = 20
+    space_above_bar = 40
+    space_below_bar = 25
+    legend_entry_height = 18
+    legend_columns = 2
 
     # Calculate legend height and total SVG height
     rows_per_column = (len(lang_stats) + legend_columns - 1) // legend_columns
@@ -66,9 +66,12 @@ def generate_language_stacked_bar(
 
     # Loop through language statistics to create legend entries
     for i, (lang, stats) in enumerate(sorted(lang_stats.items(), key=lambda x: x[1]['percentage'], reverse=True)):
+
         color = programming_languages_palette.get(lang, "#cccccc")
         column_index = i % legend_columns # Determine the column based on the index
+
         row_index = i // legend_columns # Determine the row based on the index
+
         x_pos = start_x_offset + column_index * column_width # X position for the current entry
         y_pos = legend_start_y + row_index * legend_entry_height # Y position for the current entry
 
@@ -76,8 +79,7 @@ def generate_language_stacked_bar(
             <circle cx="{x_pos + 10}" cy="{y_pos + 10}" r="5" fill="{color}"/>
             <text x="{x_pos + 25}" y="{y_pos + 15}" class="lang-label">{lang} {stats['percentage']}%</text>
         '''
-
-    # Close the SVG template
+    
     svg_template += '</svg>'
     return svg_template
 
@@ -111,13 +113,13 @@ def generate_language_donut_chart(
     # Sort language stats by percentage in descending order
     sorted_lang_stats = dict(sorted(lang_stats.items(), key=lambda item: item[1]['percentage'], reverse=True))
 
-    svg_width = 400  # Reduced width for compactness
-    svg_height = 200  # Reduced height to make it more compact
+    svg_width = 400
+    svg_height = 200
     radius = 60
     hole_radius = (hole_radius_percentage / 100) * radius
     chart_center_x = svg_width / 3  # Position chart on the left
-    chart_center_y = svg_height / 2  # Center chart vertically
-    legend_x_start = 2 * svg_width / 3 - 50  # Adjust legend position for compactness
+    chart_center_y = svg_height / 2  # Center chart vertically 
+    legend_x_start = 2 * svg_width / 3 - 50  # Adjust legend position for compactness (50 is important for the legend to be centered)
     legend_y_start = (svg_height - (len(sorted_lang_stats) * 20)) / 2 + 10  # Center legend vertically, adjusted for compactness
 
     # SVG template initialization with border
@@ -176,6 +178,5 @@ def generate_language_donut_chart(
             <text x="{legend_x_start + 15}" y="{y_pos + 10}" class="lang-label">{lang} ({stats['percentage']}%)</text>
         '''
 
-    # Close the SVG template
     svg_template += '</svg>'
     return svg_template
