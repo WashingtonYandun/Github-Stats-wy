@@ -2,8 +2,12 @@
 
 Github Stats Card for readme files based on some of the most popular ones.
 
-> [!WARNING]
-> The endpoints can be changed at any time. I will try to keep them updated, but I can't guarantee it.
+> [!IMPORTANT]
+> The UI is not the best, but it works. I will improve it in the future.
+> If you have any suggestions, please let me know.
+> I will be happy to receive your feedback.
+> Feel free to contribute to the project.
+> Thanks for using it. Remember to give it a star if you like it.
 
 ## Cards
 
@@ -40,10 +44,3 @@ There are two types of cards:
 ![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut)
 
 ---
-
-> [!IMPORTANT]
-> The UI is not the best, but it works. I will improve it in the future.
-> If you have any suggestions, please let me know.
-> I will be happy to receive your feedback.
-> Feel free to contribute to the project.
-> Thanks for using it. Remember to give it a star if you like it.
