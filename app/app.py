@@ -50,5 +50,5 @@ def langs(username: str, chart: str) -> Response:
 @app.route('/')
 def index() -> str:
     return {
-        "Langs Usage": "https://github-stats-wy.vercel.app/langs/<username"
+        "Langs Usage": "https://github-stats-wy.vercel.app/langs/<username>/<chart>"
     }
