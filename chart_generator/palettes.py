@@ -4,6 +4,7 @@ programming_languages_palette = {
     "C++": "#f34b7d",
     "CSS": "#563d7c",
     "HTML": "#e34c26",
+    "Haskell": "#5e5086",
     "Java": "#b07219",
     "JavaScript": "#f1e05a",
     "Objective-C": "#438eff",
@@ -20,4 +21,7 @@ programming_languages_palette = {
     "Unknown": "#222222",
     "Jupyter Notebook": "#DA5B0B",
     "TSQL": "#e38c00",
+    "Shell": "#89e051",
+    "PowerShell": "#012456",
+    "Perl": "#0298c3",
 }
