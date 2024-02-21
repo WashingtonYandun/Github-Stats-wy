@@ -4,25 +4,15 @@ from chart_generator.palettes import programming_languages_palette
 def generate_language_stacked_bar(
         username: str,
         lang_stats: dict,
-        border_color: str = "#cccccc",
-        background_color: str = "#ffffff",
-        title_color: str = "#000000",
-        text_color: str = "#000000"
+        chart_kwargs: dict
         ) -> str:
-    """
-    Generate a compact stacked bar chart representing the language usage of a user with customizable color options.
+ 
+    # Unpack chart_kwargs
+    border_color = chart_kwargs.get('border_color', "#cccccc")
+    background_color = chart_kwargs.get('background_color', "#ffffff")
+    title_color = chart_kwargs.get('title_color', "#000000")
+    text_color = chart_kwargs.get('text_color', "#000000")
 
-    Args:
-        username (str): The username of the user.
-        lang_stats (dict): A dictionary containing the language statistics, including the percentage.
-        border_color (str): Hex color for the SVG border.
-        background_color (str): Hex color for the SVG background.
-        title_color (str): Hex color for the title text.
-        text_color (str): Hex color for the percentage text.
-
-    Returns:
-        str: The SVG template representing the stacked bar chart.
-    """
     # Adjusted parameters for a more compact and customized chart
     svg_padding = 15
     svg_width = 400
@@ -87,31 +77,15 @@ def generate_language_stacked_bar(
 def generate_language_donut_chart(
         username: str,
         lang_stats: dict,
-
-        border_color: str = "#cccccc",
-        background_color: str = "#ffffff",
-        title_color: str = "#000000",
-        text_color: str = "#000000",
-        hole_radius_percentage: int = 60
+        chart_kwargs: dict
         ) -> str:
-    """
-    Generate a compact donut chart with a legend showing language usage for a user, sorted by percentage.
-    The SVG is made compact by reducing unused padding, and the donut chart slices are ordered from highest to lowest percentage.
 
-    Args:
-        username (str): The username of the user.
-        lang_stats (dict): A dictionary containing the language statistics, including the percentage, sorted by percentage.
-        border_color (str): Hex color for the SVG border.
-        background_color (str): Hex color for the SVG background.
-        title_color (str): Hex color for the title text.
-        text_color (str): Hex color for the text.
-        hole_radius_percentage (int): Percentage of the donut chart radius to create the hole in the center.
-
-    Returns:
-        str: The SVG template representing the donut chart with a legend, compact and sorted by percentage.
-    """
-    # Sort language stats by percentage in descending order
-    sorted_lang_stats = dict(sorted(lang_stats.items(), key=lambda item: item[1]['percentage'], reverse=True))
+    # Unpack chart_kwargs
+    border_color = chart_kwargs.get('border_color', "#cccccc")
+    background_color = chart_kwargs.get('background_color', "#ffffff")
+    title_color = chart_kwargs.get('title_color', "#000000")
+    text_color = chart_kwargs.get('text_color', "#000000")
+    hole_radius_percentage = chart_kwargs.get('hole_radius_percentage', 40)
 
     svg_width = 400
     svg_height = 200
@@ -120,7 +94,7 @@ def generate_language_donut_chart(
     chart_center_x = svg_width / 3  # Position chart on the left
     chart_center_y = svg_height / 2  # Center chart vertically 
     legend_x_start = 2 * svg_width / 3 - 50  # Adjust legend position for compactness (50 is important for the legend to be centered)
-    legend_y_start = (svg_height - (len(sorted_lang_stats) * 20)) / 2 + 10  # Center legend vertically, adjusted for compactness
+    legend_y_start = (svg_height - (len(lang_stats) * 20)) / 2 + 10  # Center legend vertically, adjusted for compactness
 
     # SVG template initialization with border
     svg_template = f'''
@@ -134,7 +108,7 @@ def generate_language_donut_chart(
 
     # Calculate the start and end angles for each slice and draw them
     start_angle = 0
-    for lang, stats in sorted_lang_stats.items():
+    for lang, stats in lang_stats.items():
         color = programming_languages_palette.get(lang, "#cccccc")
         percentage = stats['percentage']
         sweep_angle = (percentage / 100) * 360
@@ -169,7 +143,7 @@ def generate_language_donut_chart(
         start_angle += sweep_angle
 
     # Add legend on the right side, compactly
-    for i, (lang, stats) in enumerate(sorted_lang_stats.items()):
+    for i, (lang, stats) in enumerate(lang_stats.items()):
         color = programming_languages_palette.get(lang, "#cccccc")
         y_pos = legend_y_start + (i * 20)
 
