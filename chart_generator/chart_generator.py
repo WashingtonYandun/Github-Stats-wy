@@ -93,6 +93,12 @@ def generate_language_donut_chart(
     text_color = chart_kwargs.get('text_color', "#000000")
     hole_radius_percentage = chart_kwargs.get('hole_radius_percentage', 40)
 
+    # Process top 6 languages and others
+    top_langs = list(lang_stats.items())[:6]
+    other_percentage = sum(item[1]['percentage'] for item in list(lang_stats.items())[6:])
+    if other_percentage > 0:
+        top_langs.append(("Others", {"percentage": other_percentage}))
+
     # Constants for the SVG
     svg_width = 400
     svg_height = 200
@@ -101,7 +107,7 @@ def generate_language_donut_chart(
     chart_center_x = svg_width / 3
     chart_center_y = svg_height / 2
     legend_x_start = 2 * svg_width / 3 - 40
-    legend_y_start = (svg_height - (len(lang_stats) * 20)) / 2 + 40
+    legend_y_start = (svg_height - (len(top_langs) * 20)) / 2 + 10
 
     # Initialize SVG template
     svg_template = f'''
@@ -112,12 +118,6 @@ def generate_language_donut_chart(
         </style>
         <text x="{svg_width / 2}" y="20" class="title">{username}'s Language Usage</text>
     '''
-
-    # Process top 6 languages and others
-    top_langs = list(lang_stats.items())[:6]
-    other_percentage = sum(item[1]['percentage'] for item in list(lang_stats.items())[6:])
-    if other_percentage > 0:
-        top_langs.append(("Others", {"percentage": other_percentage}))
 
     # Generate the donut chart
     start_angle = 0
