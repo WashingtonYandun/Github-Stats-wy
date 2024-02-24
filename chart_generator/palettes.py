@@ -1,4 +1,6 @@
 programming_languages_palette = {
+    "Assembly": "#6E4C13",
+    "Agda": "#315665",
     "C": "#555555",
     "C#": "#178600",
     "C++": "#f34b7d",
@@ -6,6 +8,7 @@ programming_languages_palette = {
     "HTML": "#e34c26",
     "Haskell": "#5e5086",
     "Java": "#b07219",
+    "Jinja": "#a52a22",
     "JavaScript": "#f1e05a",
     "Objective-C": "#438eff",
     "PHP": "#4F5D95",
@@ -24,4 +27,8 @@ programming_languages_palette = {
     "Shell": "#89e051",
     "PowerShell": "#012456",
     "Perl": "#0298c3",
+    "PureScript": "#1D222D",
+
+
+    "Others": "#cccccc"
 }

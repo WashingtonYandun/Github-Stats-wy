@@ -1,5 +1,12 @@
 import requests
 
+github_constants = {
+    'base_url': 'https://api.github.com',
+    'user_repos': '/users/{username}/repos',
+    'user_info': '/users/{username}',
+    'user_events': '/users/{username}/events',
+}
+
 def get_user_repos(username: str) -> list:
     """
     Retrieves a list of repositories for a given GitHub user.
@@ -13,12 +20,18 @@ def get_user_repos(username: str) -> list:
     Raises:
         Exception: If the user is not found.
     """
-    response = requests.get(f'https://api.github.com/users/{username}/repos')
-    
-    if response.status_code != 200:
-        raise Exception("User not found")
+    try:
+        response = requests.get(github_constants['base_url'] + github_constants['user_repos'].format(username=username))
+        
+        if response.status_code != 200:
+            raise Exception("User not found")
+        
+        if len(response.json()) == 0:
+            raise Exception("User has no repositories")
 
-    return response.json()
+        return response.json()
+    except Exception as e:
+        raise ValueError(f"Error: Something went wrong with get_user_repos - {e}")
 
 
 def get_user_info(username: str) -> dict:
