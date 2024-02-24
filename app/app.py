@@ -1,7 +1,7 @@
 from flask import Flask, Response, request
-from app.chart_factory import chart_factory
+from factory.chart_factory import chart_factory
 from github_api.github_api import get_user_repos
-from stats_calculator.stats_calculator import calculate_language_stats
+from stats_calculator.langs_stats_calculator import calculate_language_stats
 
 app = Flask(__name__)
 
