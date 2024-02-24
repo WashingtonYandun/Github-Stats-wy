@@ -3,11 +3,12 @@
 Github Stats Card for readme files based on some of the most popular ones.
 
 > [!IMPORTANT]
-> The UI is not the best, but it works. I will improve it in the future.
+> The UI is not the best, but it works. I will be improving it in the future.
 > If you have any suggestions, please let me know.
 > I will be happy to receive your feedback.
 > Feel free to contribute to the project.
 > Thanks for using it. Remember to give it a star if you like it.
+> There are some bugs that I will be fixing soon.
 
 ## Cards
 
@@ -35,6 +36,23 @@ There are two types of cards:
 [![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/username/chart)]
 ```
 
+-   The `username` is the username of the user you want to get the stats from (GitHub user).
+-   The `chart` is the type of chart you want to use. It can be `bar`, `pie`, or `donut`.
+
+For example:
+
+```md
+[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar)]
+```
+
+```md
+[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/pie)]
+```
+
+```md
+[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut)]
+```
+
 #### Example of how it looks
 
 ![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar)
@@ -43,4 +61,26 @@ There are two types of cards:
 
 ![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut)
 
----
+## Graph customization
+
+You can customize the graph by adding the following parameters to the URL (In the future, I will add more customization options):
+
+-   `border_color`: The color of the border of the graph in hexadecimal format. Example: `border_color=000000`
+
+-   `background_color`: The color of the background of the graph in hexadecimal format. Example: `background_color=000000`
+
+-   `title_color`: The color of the title of the graph in hexadecimal format. Example: `title_color=000000`
+
+-   `text_color`: The color of the text of the graph in hexadecimal format. Example: `text_color=000000`
+
+-   `hole_radius_percentage`: The percentage of the hole in the donut chart. Example: `hole_radius_percentage=50`
+
+Here is one example of how to use it:
+
+```md
+[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar?border_color=000000&background_color=000000&title_color=000000&text_color=000000)]
+```
+
+Example of how it looks:
+
+![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut?hole_radius_percentage=60&border_color=00ff00&background_color=ff22&title_color=00ff00&text_color=00ff00)
