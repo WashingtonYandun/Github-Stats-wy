@@ -1,8 +1,6 @@
 import math
 from chart_generator.palettes import programming_languages_palette
 from chart_generator.chart_utils import calculate_donut_points
-from stats_calculator.langs_stats_calculator import get_top_n_languages
-
 
 def generate_language_stacked_bar(
         username: str,
@@ -11,7 +9,6 @@ def generate_language_stacked_bar(
         ) -> str:
     
     try:
-
         # Unpack chart_kwargs
         border_color = chart_kwargs.get('border_color', "#cccccc")
         background_color = chart_kwargs.get('background_color', "#ffffff")
@@ -28,8 +25,11 @@ def generate_language_stacked_bar(
         legend_entry_height = 18
         legend_columns = 2
 
-        # Process top 7 languages and sum others
-        top_langs = get_top_n_languages(lang_stats, 7)
+        # Process top 6 languages and sum others
+        top_langs = dict(list(lang_stats.items())[:7])
+        other_percentage = round(sum([stats['percentage'] for lang, stats in list(lang_stats.items())[7:]]), 2)
+        if other_percentage > 0:
+            top_langs['Others'] = {'percentage': other_percentage}
 
         # Calculate legend height and total SVG height considering the new top_langs
         rows_per_column = (len(top_langs) + legend_columns - 1) // legend_columns
@@ -98,11 +98,14 @@ def generate_language_donut_chart(
         hole_radius_percentage = chart_kwargs.get('hole_radius_percentage', 40)
 
         # Process top 6 languages and others
-        top_langs = get_top_n_languages(lang_stats, 6)
+        top_langs = list(lang_stats.items())[:6]
+        other_percentage = sum(item[1]['percentage'] for item in list(lang_stats.items())[6:])
+        if other_percentage > 0:
+            top_langs.append(("Others", {"percentage": other_percentage}))
 
         # Constants for the SVG
-        svg_width = 398
-        svg_height = 198
+        svg_width = 400
+        svg_height = 200
         outer_radius = 60
         inner_radius = (hole_radius_percentage / 100) * outer_radius
         chart_center_x = svg_width / 3
