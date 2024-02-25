@@ -104,8 +104,8 @@ def generate_language_donut_chart(
             top_langs.append(("Others", {"percentage": other_percentage}))
 
         # Constants for the SVG
-        svg_width = 400
-        svg_height = 200
+        svg_width = 398
+        svg_height = 198
         outer_radius = 60
         inner_radius = (hole_radius_percentage / 100) * outer_radius
         chart_center_x = svg_width / 3
