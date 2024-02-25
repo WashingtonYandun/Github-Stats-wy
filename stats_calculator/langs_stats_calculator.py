@@ -51,8 +51,8 @@ def get_top_n_langs(lang_stats: dict, n: int) -> dict:
     try:
         top_langs = list(lang_stats.items())[:n]
 
-        other_percentage = sum(item[1]['percentage'] for item in list(lang_stats.items())[n:])
-        
+        other_percentage = round(sum(item[1]['percentage'] for item in list(lang_stats.items())[n:]), 2)
+
         if other_percentage > 0:
             top_langs.append(("Others", {"percentage": other_percentage}))
 

@@ -3,6 +3,10 @@ from chart_generator.palettes import programming_languages_palette
 from chart_generator.chart_utils import calculate_donut_points
 from stats_calculator.langs_stats_calculator import get_top_n_langs
 
+# TODO: REFAC: Refactor the following functions
+# TODO: DOC: Add documentation to the following functions
+# TODO: REFAC: Code here is so bad... I need to refactor it... I'm sorry for this mess but it works for now
+
 def generate_language_stacked_bar(
         username: str,
         lang_stats: dict,
@@ -16,15 +20,18 @@ def generate_language_stacked_bar(
         title_color = chart_kwargs.get('title_color', "#000000")
         text_color = chart_kwargs.get('text_color', "#000000")
         border_radius = chart_kwargs.get('border_radius', 10)
+        border_width = chart_kwargs.get('border_width', 1)
+        bar_height = chart_kwargs.get('bar_height')
 
         # Adjusted parameters
         svg_padding = 15
-        border_width = 1
         svg_width = 400
+
         bar_padding_horizontal = 30
-        bar_height = 20
+
         space_above_bar = 40
         space_below_bar = 25
+
         legend_entry_height = 18
         legend_columns = 2
 
@@ -61,15 +68,18 @@ def generate_language_stacked_bar(
         column_width = total_bar_width / legend_columns
         start_x_offset = (svg_width - total_bar_width) / 2
         legend_start_y = space_above_bar + bar_height + space_below_bar
+
         for i, (lang, stats) in enumerate(top_langs.items()):
-            color = programming_languages_palette.get(lang, "#cccccc") if lang != 'Others' else "#cccccc"
+            color = programming_languages_palette.get(lang, "#cccccc")
+
             column_index = i % legend_columns
             row_index = i // legend_columns
             x_pos = start_x_offset + column_index * column_width
             y_pos = legend_start_y + row_index * legend_entry_height
+
             svg_template += f'''
                 <circle cx="{x_pos + 10}" cy="{y_pos + 10}" r="5" fill="{color}"/>
-                <text x="{x_pos + 25}" y="{y_pos + 15}" class="lang-label">{lang} {stats['percentage']}%</text>
+                <text x="{x_pos + 25}" y="{y_pos + 15}" class="lang-label">{lang} ({stats['percentage']}%)</text>
             '''
         
         svg_template += '</svg>'
@@ -83,6 +93,20 @@ def generate_language_donut_chart(
         lang_stats: dict,
         chart_kwargs: dict
         ) -> str:
+    """
+    Generate a donut chart SVG based on language statistics.
+
+    Args:
+        username (str): The username associated with the language statistics.
+        lang_stats (dict): A dictionary containing language statistics.
+        chart_kwargs (dict): Optional keyword arguments for customizing the chart.
+
+    Returns:
+        str: The SVG representation of the donut chart.
+
+    Raises:
+        ValueError: If an error occurs during the chart generation process.
+    """
     
     try:
         # Unpack chart_kwargs
@@ -92,18 +116,21 @@ def generate_language_donut_chart(
         text_color = chart_kwargs.get('text_color', "#000000")
         hole_radius_percentage = chart_kwargs.get('hole_radius_percentage', 40)
         border_radius = chart_kwargs.get('border_radius', 10)
-        border_width = 1
+        border_width = chart_kwargs.get('border_width', 1)
+        outer_radius = chart_kwargs.get('outer_radius', 60)
 
         # Process top 6 languages and others
         top_langs = get_top_n_langs(lang_stats, 6).items()
 
         # Constants for the SVG
-        svg_width = 398
-        svg_height = 198
-        outer_radius = 60
+        svg_width = 400
+        svg_height = 200
+
         inner_radius = (hole_radius_percentage / 100) * outer_radius
-        chart_center_x = svg_width / 3
-        chart_center_y = svg_height / 2
+
+        chart_center_x = svg_width / 3 
+        chart_center_y = svg_height / 2 + 10
+        
         legend_x_start = 2 * svg_width / 3 - 40
         legend_y_start = (svg_height - (len(top_langs) * 20)) / 2 + 10
 
@@ -116,7 +143,7 @@ def generate_language_donut_chart(
                 .title {{ font: bold 14px "Segoe UI", Ubuntu, Sans-Serif; fill: {title_color}; text-anchor: middle; }}
                 .lang-label {{ font: 400 12px "Segoe UI", Ubuntu, Sans-Serif; fill: {text_color}; }}
             </style>
-            <text x="{svg_width / 2}" y="20" class="title">{username}'s Language Usage</text>
+            <text x="{svg_width / 2}" y="30" class="title">{username}'s Language Usage</text>
         '''
 
         # Generate the donut chart
@@ -124,6 +151,7 @@ def generate_language_donut_chart(
         for lang, stats in top_langs:
             color = programming_languages_palette.get(lang, "#cccccc")
             percentage = stats['percentage']
+
             sweep_angle = (percentage / 100) * 360
             end_angle = start_angle + sweep_angle
 
@@ -133,14 +161,14 @@ def generate_language_donut_chart(
             large_arc_flag = '1' if sweep_angle > 180 else '0'
 
             path_d = f"M {start_point_outer[0]} {start_point_outer[1]} A {outer_radius} {outer_radius} 0 {large_arc_flag} 1 {end_point_outer[0]} {end_point_outer[1]} L {end_point_inner[0]} {end_point_inner[1]} A {inner_radius} {inner_radius} 0 {large_arc_flag} 0 {start_point_inner[0]} {start_point_inner[1]} Z"
+            
             svg_template += f'<path d="{path_d}" fill="{color}"/>'
-
             start_angle += sweep_angle
 
         # Add legend
         for i, (lang, stats) in enumerate(top_langs):
             color = programming_languages_palette.get(lang, "#cccccc")
-            y_pos = legend_y_start + (i * 20)
+            y_pos = legend_y_start + (i * 20) + 5
 
             svg_template += f'''
                 <rect x="{legend_x_start}" y="{y_pos}" width="10" height="10" fill="{color}"/>
