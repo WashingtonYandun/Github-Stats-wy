@@ -10,3 +10,13 @@ def langs(username: str, chart: str) -> Response:
         return Response(svg_image, mimetype='image/svg+xml')
     except Exception as e:
         return f"Error: Something went wrong - {e}", 500
+
+
+@app.route('/', methods=['GET'])
+def index() -> dict:
+    return {
+        'message': 'Give a star to the project if you liked it! In the future this will be a landing page with some information about the project and how to use it.',
+        'endpoints': {
+            'get_language_stats_chart': '/langs/<username>/<chart>'
+        }
+    }
