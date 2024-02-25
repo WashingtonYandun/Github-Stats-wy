@@ -1,14 +1,17 @@
 # Github-Stats-wy
 
-Github Stats Card for readme files based on some of the most popular ones.
+Github Stats Card for readme files in GitHub.
+
+SVG cards for your GitHub profile, repositories, and languages.
+
+> [!WARNING]
+> The UI is not the best, but it works. I will be improving it in the future.
+> There are some bugs that I will be fixing soon.
 
 > [!IMPORTANT]
-> The UI is not the best, but it works. I will be improving it in the future.
-> If you have any suggestions, please let me know.
-> I will be happy to receive your feedback.
+> If you have any suggestions, please let me know. I will be happy to receive your feedback.
 > Feel free to contribute to the project.
 > Thanks for using it. Remember to give it a star if you like it.
-> There are some bugs that I will be fixing soon.
 
 ## Cards
 
@@ -24,7 +27,7 @@ Github Stats Card for readme files based on some of the most popular ones.
 
 Based on the number of repositories you have in each language.
 
-There are two types of cards:
+There are three types of cards:
 
 -   Bar Chart
 -   Pie Chart
@@ -33,7 +36,7 @@ There are two types of cards:
 #### Example of how to use it
 
 ```md
-[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/username/chart)]
+[![WashingtonYandun's stats](https://github-stats-wy.vercel.app/langs/username/chart)]
 ```
 
 -   The `username` is the username of the user you want to get the stats from (GitHub user).
@@ -42,24 +45,22 @@ There are two types of cards:
 For example:
 
 ```md
-[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar)]
+[![WashingtonYandun's stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar)]
 ```
 
 ```md
-[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/pie)]
+[![WashingtonYandun's stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/pie)]
 ```
 
 ```md
-[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut)]
+[![WashingtonYandun's stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut)]
 ```
 
 #### Example of how it looks
 
-![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar)
-
-![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/pie)
-
-![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut)
+| Bar Chart                                                                   | Pie Chart                                                                   | Donut Chart                                                                     |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| ![Bar Chart](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar) | ![Pie Chart](https://github-stats-wy.vercel.app/langs/washingtonyandun/pie) | ![Donut Chart](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut) |
 
 ## Graph customization
 
@@ -78,9 +79,9 @@ You can customize the graph by adding the following parameters to the URL (In th
 Here is one example of how to use it:
 
 ```md
-[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/bar?border_color=000000&background_color=000000&title_color=000000&text_color=000000)]
+[![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut?hole_radius_percentage=60&border_color=00ff00&background_color=ff22&title_color=00ff00&text_color=00ff00)]
 ```
 
 Example of how it looks:
 
-![WashingtonYandun's GitHub stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut?hole_radius_percentage=60&border_color=00ff00&background_color=ff22&title_color=00ff00&text_color=00ff00)
+![WashingtonYandun's stats](https://github-stats-wy.vercel.app/langs/washingtonyandun/donut?hole_radius_percentage=60&border_color=00ff00&background_color=ff22&title_color=00ff00&text_color=00ff00)
