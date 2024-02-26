@@ -29,6 +29,12 @@ programming_languages_palette = {
     "Perl": "#0298c3",
     "PureScript": "#1D222D",
 
-
     "Others": "#cccccc"
+}
+
+wy_palettes = {
+    "paulette": ["7BDFF2", "B2F7EF", "EFF7F6", "F7D6E0", "F2B5D4", "F79CD4", "9CACAC", "BC796F", "F7A278"],
+    "wyse": ["FFD6E7", "FFC2D1", "FFB3C6", "FF8FAB", "FB6F92", "FF8FAB", "FFB3C6", "FFC2D1", "FFE5EC", "FFD6E7"],
+    "july": ["FB6F92", "FF8FAB", "FFB3C6", "FFC2D1", "FFE5EC", "FFD6E7", "FFC2D1", "FF8FAB", "FB6F92"],
+    "electriza": ["D90429", "EF233C", "EDF2F4", "8D99AE", "2B2D42", "EF233C", "EDF2F4", "8D99AE", "2B2D42", "D90429"],
 }
