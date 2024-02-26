@@ -61,7 +61,7 @@ def generate_language_stacked_bar(
         for lang, stats in top_langs.items():
             color = programming_languages_palette.get(lang, "#cccccc")
             width = (stats['percentage'] / 100) * total_bar_width
-            svg_template += f'<rect x="{current_x}" y="{space_above_bar}" width="{width}" height="{bar_height}" fill="{color}"/>'
+            svg_template += f'<rect x="{current_x}" y="{space_above_bar + 10}" width="{width}" height="{bar_height}" fill="{color}"/>'
             current_x += width
 
         # Generate the legend
@@ -74,6 +74,7 @@ def generate_language_stacked_bar(
 
             column_index = i % legend_columns
             row_index = i // legend_columns
+            
             x_pos = start_x_offset + column_index * column_width
             y_pos = legend_start_y + row_index * legend_entry_height
 
