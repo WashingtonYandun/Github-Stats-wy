@@ -1,6 +1,6 @@
 # Github-Stats-wy
 
-Github Stats Card for readme files in GitHub.
+Github Stats Card for readme files in GitHub. Using the GitHub api.
 
 SVG cards for your GitHub profile, repositories, and languages.
 
